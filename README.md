@@ -27,3 +27,4 @@ Utilize Tableau  to create a comprehensive dashboard that presents key insights 
 
 ## Tableau dashboard:
 [Click Here](https://public.tableau.com/app/profile/raji.venkat/viz/Airbnb_17184232293590/AirbnbDashboard) for in-depth insights.
+![image](https://github.com/RajiVenkat89/AirBnbAnalysis/blob/main/Tableau%20Dashboard.jpg)
