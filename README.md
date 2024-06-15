@@ -1,5 +1,5 @@
 # Airbnb_Analysis
- ![image](https://github.com/praveendecode/Airbnb_Analysis/assets/95226524/8bf44dd8-8c13-4dd6-ba7d-40e9938ea361)
+ ![image](https://github.com/RajiVenkat89/AirBnbAnalysis/blob/main/airbnb.jfif)
 # Domain : Travel Industry, Property management and Tourism
 # Problem Statement :
 This project aims to analyze Airbnb data and perform data cleaning and preparation, develop interactive geospatial visualizations, and create dynamic plots to gain insights into pricing variations, availability patterns, and location-based trends.
