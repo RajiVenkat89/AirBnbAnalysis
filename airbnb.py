@@ -242,6 +242,8 @@ st.set_page_config(page_title='AIRBNB',layout="wide")
 st.markdown(f'<h1 style= "text-align:center;size:24px;color:blue;">AIRBNB ANALYSIS</h1>',unsafe_allow_html=True)
 st.header(":blue[**Welcome!!!**]")
 with st.sidebar:
+    image_url='https://raw.githubusercontent.com/RajiVenkat89/AirBnbAnalysis/main/airbnb.jpeg'
+    st.image(image_url,use_column_width=True)
     selected = option_menu(menu_title='',options=["Data Migration","Country Analysis","Host Analysis","Features"],
         icons=['database','pin-map','people-fill','pencil','list-task'], menu_icon="cast", default_index=0)
 
