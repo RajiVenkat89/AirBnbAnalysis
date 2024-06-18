@@ -184,6 +184,15 @@ def host_count(country,column_value,column_name):
     df.index+=1
     return df
 
+#This function is used to get the host name count based on the type of column passed and the country name .
+def listings(country,column_value,column_name):
+    cursor.execute(f"select name,host_name,review_sc_rtg from airbnb_prop_dtls where addr_country='{country}' and {column_name}='{column_value}' order by review_sc_rtg desc limit 10")
+    output=cursor.fetchall()
+    df=pd.DataFrame(output,columns=['Name','Host Name','Rating'])
+    df.index.name="S.No"
+    df.index+=1
+    return df
+
 #This function is used to get the count of any feature based on the column name provided 
 def feature_count(column_name):
     cursor.execute(f"select {column_name},count({column_name}) as count from airbnb_prop_dtls group by {column_name} order by count desc limit 10")
@@ -244,8 +253,8 @@ st.header(":blue[**Welcome!!!**]")
 with st.sidebar:
     image_url='https://raw.githubusercontent.com/RajiVenkat89/AirBnbAnalysis/main/airbnb.jpeg'
     st.image(image_url,use_column_width=True)
-    selected = option_menu(menu_title='',options=["Data Migration","Country Analysis","Host Analysis","Features"],
-        icons=['database','pin-map','people-fill','pencil','list-task'], menu_icon="cast", default_index=0)
+    selected = option_menu(menu_title='',options=["Data Migration","Country Analysis","Host Analysis","Listings","Features"],
+        icons=['database','pin-map','people-fill','list-task','pencil','list-task'], menu_icon="cast", default_index=0)
 
 if(selected=='Data Migration'):
     tab1,tab2=st.tabs(["Import to DB", "Export as CSV"])
@@ -305,16 +314,41 @@ if(selected=='Host Analysis'):
         barchart(count_data,'Host_Name','Count','Count','Property Type','Property Type')        
     with tab3:
         host_resp_time_data=column_name(country,'host_resp_time')
-        host_resp_time=st.selectbox("Property Type",host_resp_time_data['host_resp_time'])
+        host_resp_time=st.selectbox("Response Time",host_resp_time_data['host_resp_time'])
         count_data=host_count(country,host_resp_time,'host_resp_time')
         piechart(count_data,'Host_Name','Count','Host Response Time')
         barchart(count_data,'Host_Name','Count','Count','Host Response Time','Host Response Time')       
     with tab4:
         cancel_pol_data=column_name(country,'cancel_pol')
-        cancel_pol=st.selectbox("Property Type",cancel_pol_data['cancel_pol'])
+        cancel_pol=st.selectbox("Cancellation Policy",cancel_pol_data['cancel_pol'])
         count_data=host_count(country,cancel_pol,'cancel_pol')
         piechart(count_data,'Host_Name','Count','Cancellation Policy')
         barchart(count_data,'Host_Name','Count','Count','Cancellation Policy','Cancellation Policy') 
+
+if(selected=='Listings'):
+    country_list=country_list()
+    country=st.selectbox(label='Country',options=country_list)              
+    tab1,tab2,tab3,tab4=st.tabs(["Room Type","Property Type","Response Time","Cancellation Policy"])
+    with tab1:
+        room_type_data=column_name(country,'room_type')
+        room_type=st.selectbox("Room Type",room_type_data['room_type'])
+        data=listings(country,room_type,'room_type')
+        st.table(data)
+    with tab2:
+        prop_type_data=column_name(country,'prop_type')
+        prop_type=st.selectbox("Property Type",prop_type_data['prop_type'])
+        data=listings(country,prop_type,'prop_type')
+        st.table(data)        
+    with tab3:
+        host_resp_time_data=column_name(country,'host_resp_time')
+        host_resp_time=st.selectbox("Response Time",host_resp_time_data['host_resp_time'])
+        data=listings(country,host_resp_time,'host_resp_time')
+        st.table(data)     
+    with tab4:
+        cancel_pol_data=column_name(country,'cancel_pol')
+        cancel_pol=st.selectbox("Cancellation Policy",cancel_pol_data['cancel_pol'])
+        data=listings(country,cancel_pol,'cancel_pol')
+        st.table(data)
        
 if(selected=='Features'):
     tab1,tab2,tab3=st.tabs(['Property_Type','Room Type','Bed Type'])
